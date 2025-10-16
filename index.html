@@ -3,257 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSTV STORE - Premium IPTV Service</title>
+    <title>DSTVSTORE - Premium IPTV Service</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        /* Custom CSS for slideshow animation */
-        @keyframes slide {
-            0% { transform: translateX(0); }
-            12.5% { transform: translateX(-100%); }
-            25% { transform: translateX(-200%); }
-            37.5% { transform: translateX(-300%); }
-            50% { transform: translateX(-400%); }
-            62.5% { transform: translateX(-300%); }
-            75% { transform: translateX(-200%); }
-            87.5% { transform: translateX(-100%); }
-            100% { transform: translateX(0); }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a365d', // Navy blue - trustworthy and professional
+                        secondary: '#e53e3e' // Vibrant red - action-oriented
+                    }
+                }
+            }
         }
-        .slideshow-container {
-            animation: slide 60s infinite linear;
-}
-        /* Hover effect for pricing cards */
+    </script>
+    <style>
+        .logo-text {
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 1px;
+        }
+        .device-hover {
+            transition: transform 0.3s ease;
+        }
+        .device-hover:hover {
+            transform: scale(1.1);
+        }
+        .pricing-card {
+            transition: all 0.3s ease;
+        }
         .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
     </style>
 </head>
-<body class="font-sans bg-white">
-
-    <!-- Header Section (Blue Background) -->
-    <header class="bg-blue-600 text-white shadow-lg">
+<body class="bg-gray-50">
+    <!-- Language Toggle -->
+    <div class="bg-gray-800 text-white text-right py-1 px-4">
+        <button id="langToggle" class="text-xs hover:text-secondary">Français</button>
+            </div>
+            <style>
+                @keyframes zoomIn {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.2); }
+                    100% { transform: scale(1); }
+                }
+                .animate-zoom {
+                    animation: zoomIn 3s infinite ease-in-out;
+                }
+                .animate-zoom:nth-child(1) { animation-delay: 0s; }
+                .animate-zoom:nth-child(2) { animation-delay: 0.5s; }
+                .animate-zoom:nth-child(3) { animation-delay: 1s; }
+                .animate-zoom:nth-child(4) { animation-delay: 1.5s; }
+                .animate-zoom:nth-child(5) { animation-delay: 2s; }
+                .animate-zoom:nth-child(6) { animation-delay: 2.5s; }
+                .animate-zoom:nth-child(7) { animation-delay: 3s; }
+            </style>
+<!-- Header -->
+    <header class="bg-primary text-white shadow-lg">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <!-- Logo with TV Symbol and Name (Left) -->
-            <div class="flex items-center space-x-2">
-                <i data-feather="tv" class="w-8 h-8"></i>
-                <h1 class="text-2xl font-bold">DSTV STORE</h1>
+            <div class="flex items-center">
+                <i data-feather="tv" class="text-secondary mr-2 w-8 h-8"></i>
+                <span class="logo-text text-2xl font-bold">DSTVSTORE</span>
             </div>
-            
-            <!-- Navigation Buttons (Right) -->
-            <nav class="hidden md:flex space-x-6">
-                <a href="#" class="hover:text-blue-200 transition duration-300">Home</a>
-                <a href="#" class="hover:text-blue-200 transition duration-300">About Us</a>
-                <a href="#" class="hover:text-blue-200 transition duration-300">Contact Us</a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-secondary font-medium transition duration-300 lang-en">Home</a>
+                <a href="#" class="hover:text-secondary font-medium transition duration-300 lang-en">About Us</a>
+                <a href="#" class="hover:text-secondary font-medium transition duration-300 lang-en">Contact</a>
+                <a href="#" class="hidden hover:text-secondary font-medium transition duration-300 lang-fr">Accueil</a>
+                <a href="#" class="hidden hover:text-secondary font-medium transition duration-300 lang-fr">À Propos</a>
+                <a href="#" class="hidden hover:text-secondary font-medium transition duration-300 lang-fr">Contact</a>
             </nav>
-            <!-- Language Selector -->
-            <div class="flex space-x-2">
-                <button onclick="changeLanguage('en')" class="px-3 py-1 bg-blue-700 rounded-md hover:bg-blue-800 transition">EN</button>
-                <button onclick="changeLanguage('fr')" class="px-3 py-1 bg-blue-500 rounded-md hover:bg-blue-600 transition">FR</button>
-            </div>
-</div>
+            <button class="md:hidden">
+                <i data-feather="menu"></i>
+            </button>
+        </div>
     </header>
 
-    <!-- Hero Section with IPTV Description and Image -->
-    <section class="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center gap-8">
-        <!-- IPTV Description (Left) -->
-        <div class="md:w-1/2 space-y-6">
-            <h2 class="text-3xl font-bold text-gray-800">Premium IPTV Service</h2>
-            <p class="text-gray-600 leading-relaxed">
-                Experience the future of television with our cutting-edge IPTV service. 
-                Enjoy seamless streaming of over 20,000 live channels, 24,000+ movies, 
-                and TV series in crystal-clear HD quality. Our robust servers ensure 
-                buffer-free entertainment anytime, anywhere.
-            </p>
-            <div class="flex space-x-4">
-                <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                    Start Free Trial
-                </button>
-                <button class="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition">
-                    Learn More
-                </button>
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-12 md:py-20">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 lang-en">Premium <span class="text-primary">IPTV</span> Service</h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 hidden lang-fr">Service <span class="text-primary">IPTV</span> Premium</h1>
+                
+                <p class="text-lg text-gray-600 mb-8 lang-en">
+                    Experience unparalleled streaming with over 20,000 channels, 4K quality, and zero buffering. 
+                    Our cutting-edge technology ensures you never miss your favorite shows, sports, or movies.
+                </p>
+                <p class="text-lg text-gray-600 mb-8 hidden lang-fr">
+                    Découvrez une expérience de streaming inégalée avec plus de 20 000 chaînes, qualité 4K et zéro buffering.
+                    Notre technologie de pointe vous garantit de ne jamais rater vos émissions, sports ou films préférés.
+                </p>
+                
+                <div class="flex space-x-4">
+                    <a href="http://wa.me/+212774112292" class="bg-secondary hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 lang-en">
+                        Try Now
+                    </a>
+                    <a href="http://wa.me/+212774112292" class="bg-secondary hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden lang-fr">
+                        Tester Maintenant
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://i.postimg.cc/c40b4wX7/Untitled-design.png" alt="IPTV Streaming" class="w-full max-w-lg rounded-lg shadow-xl">
             </div>
         </div>
-        
-        <!-- IPTV Image (Right) -->
-        <div class="md:w-1/2 flex justify-center">
-            <img src="https://i.postimg.cc/c40b4wX7/Untitled-design.png" alt="IPTV Service" class="rounded-lg shadow-xl max-w-full h-auto">
-        </div>
     </section>
-
-    <!-- Logo Slideshow Section -->
-    <section class="bg-gray-50 py-8 overflow-hidden">
+<!-- Why Choose Us -->
+    <section class="bg-gray-100 py-16">
         <div class="container mx-auto px-4">
-            <h3 class="text-2xl font-semibold text-center text-gray-800 mb-8">Trusted By Thousands</h3>
-            <div class="relative h-24 overflow-hidden">
-                <div class="slideshow-container flex w-full">
-                    <img src="https://iptvfr.homes/wp-content/uploads/2024/03/3-2.png" alt="Logo 1" class="h-16 mx-8 object-contain">
-                    <img src="https://iptvfr.homes/wp-content/uploads/2024/03/4-2.png" alt="Logo 2" class="h-16 mx-8 object-contain">
-                    <img src="https://iptvfr.homes/wp-content/uploads/2024/03/5-2.png" alt="Logo 3" class="h-16 mx-8 object-contain">
-                    <img src="https://iptvfr.homes/wp-content/uploads/2024/03/2-3.png" alt="Logo 4" class="h-16 mx-8 object-contain">
-                    <img src="https://iptvfr.homes/wp-content/uploads/2024/03/2-3.png" alt="Logo 5" class="h-16 mx-8 object-contain">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 lang-en">Why Choose <span class="text-primary">DSTVSTORE</span>?</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 hidden lang-fr">Pourquoi choisir <span class="text-primary">DSTVSTORE</span> ?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-primary bg-opacity-10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="shield" class="text-primary w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 lang-en">99.9% Uptime</h3>
+                    <h3 class="text-xl font-semibold mb-3 hidden lang-fr">99.9% Disponibilité</h3>
+                    <p class="text-gray-600 lang-en">Our servers are optimized to provide uninterrupted streaming 24/7.</p>
+                    <p class="text-gray-600 hidden lang-fr">Nos serveurs sont optimisés pour un streaming ininterrompu 24h/24.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-primary bg-opacity-10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="film" class="text-primary w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 lang-en">Massive Content Library</h3>
+                    <h3 class="text-xl font-semibold mb-3 hidden lang-fr">Énorme Bibliothèque</h3>
+                    <p class="text-gray-600 lang-en">Over 20,000 channels and 24,000 VOD including movies & series.</p>
+                    <p class="text-gray-600 hidden lang-fr">Plus de 20 000 chaînes et 24 000 VOD incluant films et séries.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="bg-primary bg-opacity-10 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="headphones" class="text-primary w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 lang-en">24/7 Support</h3>
+                    <h3 class="text-xl font-semibold mb-3 hidden lang-fr">Support 24/7</h3>
+                    <p class="text-gray-600 lang-en">Dedicated support team ready to assist you anytime.</p>
+                    <p class="text-gray-600 hidden lang-fr">Équipe de support dédiée prête à vous aider à tout moment.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="container mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-800">Why Choose Our IPTV?</h2>
-            <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
-                Our powerful infrastructure delivers unmatched streaming quality and reliability
-            </p>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                <div class="text-blue-600 mb-4">
-                    <i data-feather="server" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Powerful Servers</h3>
-                <p class="text-gray-600">
-                    Robust infrastructure with 99.9% uptime guarantee and worldwide coverage
-                </p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                <div class="text-blue-600 mb-4">
-                    <i data-feather="film" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">24K+ Content</h3>
-                <p class="text-gray-600">
-                    Massive library of movies, series, and live channels updated daily
-                </p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
-                <div class="text-blue-600 mb-4">
-                    <i data-feather="monitor" class="w-10 h-10"></i>
-                </div>
-                <h3 class="text-xl font-semibold mb-2">Multi-Device</h3>
-                <p class="text-gray-600">
-                    Watch on any device - Smart TV, Phone, Tablet, PC, or MAG Box
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Plans Section (Blue Header) -->
-    <section class="bg-gray-50 py-12">
+    <!-- Device Compatibility -->
+    <section class="py-16">
         <div class="container mx-auto px-4">
-            <div class="bg-blue-600 text-white rounded-t-lg px-6 py-3">
-<h2 class="text-2xl font-bold">Choose Your Plan</h2>
-                <p class="opacity-90">Flexible pricing for every need</p>
-            </div>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 lang-en">Works On All Your <span class="text-primary">Devices</span></h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 hidden lang-fr">Fonctionne sur tous vos <span class="text-primary">Appareils</span></h2>
             
-            <div class="grid md:grid-cols-3 gap-6 mt-6">
+            <div class="flex flex-wrap justify-center gap-8 md:gap-12" id="deviceSlider">
+                <div class="device-hover animate-zoom">
+                    <img src="https://cdn.broadbandtvnews.com/wp-content/uploads/2017/11/14114520/Android-TV-logo.jpg" alt="Android TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/052011/samsung_smart_tv.png?itok=Ejf5PX5e" alt="Samsung Smart TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/LG_logo_%282014%29.svg/1280px-LG_logo_%282014%29.svg.png" alt="LG TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://images.seeklogo.com/logo-png/12/1/sony-logo-png_seeklogo-129420.png" alt="Sony TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRabjABZ5X9_c7QLj9LTJxong1J7nGfXrmpbKW2TvamDGiaIMzHPkXC0QeFYdswRETcaBg&usqp=CAU" alt="Apple TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRm_J9tvz2qlQfWyyXmXwdzfLeWX4mORcuJtNfj0ydmy2gtf5yTAiWFLqYYziC6QOGd7A&usqp=CAU" alt="Fire TV" class="h-16 object-contain">
+                </div>
+                <div class="device-hover animate-zoom">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMvxfiw_t7ucx5RAXY71xCViLAMBsUg5f1uA&s" alt="MAG Box" class="h-16 object-contain">
+                </div>
+</div>
+        </div>
+    </section>
+
+    <!-- Pricing Plans -->
+    <section class="bg-gray-100 py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4 lang-en">Simple, Affordable <span class="text-primary">Pricing</span></h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4 hidden lang-fr">Tarification <span class="text-primary">Simple</span> et Abordable</h2>
+            
+            <p class="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto lang-en">
+                Choose the perfect plan for your entertainment needs. All plans include premium channels and VOD.
+            </p>
+            <p class="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto hidden lang-fr">
+                Choisissez le forfait parfait pour vos besoins en divertissement. Tous les forfaits incluent des chaînes premium et VOD.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Lite Plan -->
-                <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
-                    <div class="bg-blue-100 p-6">
-                        <h3 class="text-xl font-bold text-gray-800">Lite</h3>
-                        <p class="text-blue-600">Perfect for casual viewers</p>
+                <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-gray-200 p-6">
+                        <h3 class="text-2xl font-bold text-center text-gray-800 lang-en">Lite</h3>
+                        <h3 class="text-2xl font-bold text-center text-gray-800 hidden lang-fr">Lite</h3>
                     </div>
                     <div class="p-6">
-                        <div class="text-4xl font-bold mb-4">€39<span class="text-sm font-normal text-gray-500">/month</span></div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-primary">€39</span>
+                            <span class="text-gray-600 lang-en">/year</span>
+                            <span class="text-gray-600 hidden lang-fr">/an</span>
+</div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
                                 <span>10,000+ Channels</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>15,000+ VOD</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>10 000+ Chaînes</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>24/7 Support</span>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>12,000+ Movies & Series</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Instant Delivery</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>12 000+ Films & Séries</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Online Activation</span>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>HD & FHD Quality</span>
                             </li>
-</ul>
-                        <a href="http://wa.me/+212774112292" class="block w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition">
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Qualité HD & FHD</span>
+                            </li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>24/7 Customer Support</span>
+                            </li>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Support Client 24/7</span>
+                            </li>
+                        </ul>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300 lang-en">
                             Buy Now
+                        </a>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300 hidden lang-fr">
+                            Acheter Maintenant
                         </a>
                     </div>
                 </div>
                 
-                <!-- Pro Plan (Highlighted) -->
-                <div class="pricing-card bg-white rounded-lg shadow-lg overflow-hidden transition duration-300 transform scale-105">
-                    <div class="bg-blue-600 text-white p-6">
-                        <h3 class="text-xl font-bold">Pro</h3>
-                        <p>Most Popular Choice</p>
+                <!-- Pro Plan -->
+                <div class="pricing-card bg-white rounded-lg shadow-lg overflow-hidden transform scale-105 relative">
+                    <div class="absolute top-0 right-0 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-bl-lg lang-en">
+                        POPULAR
+                    </div>
+                    <div class="absolute top-0 right-0 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-bl-lg hidden lang-fr">
+                        POPULAIRE
+                    </div>
+                    <div class="bg-primary p-6">
+                        <h3 class="text-2xl font-bold text-center text-white">Pro</h3>
                     </div>
                     <div class="p-6">
-                        <div class="text-4xl font-bold mb-4">€49<span class="text-sm font-normal text-gray-500">/month</span></div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-primary">€49</span>
+                            <span class="text-gray-600 lang-en">/year</span>
+                            <span class="text-gray-600 hidden lang-fr">/an</span>
+</div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
                                 <span>15,000+ Channels</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>20,000+ VOD</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>15 000+ Chaînes</span>
+                            </li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>18,000+ Movies & Series</span>
+                            </li>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>18 000+ Films & Séries</span>
+                            </li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>FHD & Some 4K Quality</span>
                             </li>
                             <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>24/7 Support</span>
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span class="lang-en">All Football in 4K/UHD</span>
+                                <span class="lang-fr hidden">Tout le football en 4K/UHD</span>
                             </li>
                             <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Instant Delivery</span>
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span class="lang-en">Compatible with all devices</span>
+                                <span class="lang-fr hidden">Compatible avec tous les appareils</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Online Activation</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Qualité FHD & Certains 4K</span>
+</li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>24/7 Priority Support</span>
                             </li>
-</ul>
-                        <a href="http://wa.me/+212774112292" class="block w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition">
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Support Prioritaire 24/7</span>
+                            </li>
+                        </ul>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-primary hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300 lang-en">
                             Buy Now
+                        </a>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-primary hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden lang-fr">
+                            Acheter Maintenant
                         </a>
                     </div>
                 </div>
                 
-                <!-- Premium Plan -->
-                <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300">
-                    <div class="bg-blue-100 p-6">
-                        <h3 class="text-xl font-bold text-gray-800">Premium</h3>
-                        <p class="text-blue-600">For ultimate entertainment</p>
+                <!-- Premium 4K Plan -->
+                <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-secondary p-6">
+                        <h3 class="text-2xl font-bold text-center text-white lang-en">Premium 4K</h3>
+                        <h3 class="text-2xl font-bold text-center text-white hidden lang-fr">Premium 4K</h3>
                     </div>
                     <div class="p-6">
-                        <div class="text-4xl font-bold mb-4">€59<span class="text-sm font-normal text-gray-500">/month</span></div>
-                        <ul class="space-y-3 mb-6">
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
+                        <div class="text-center mb-6">
+                            <span class="text-4xl font-bold text-primary">€59</span>
+                            <span class="text-gray-600 lang-en">/year</span>
+                            <span class="text-gray-600 hidden lang-fr">/an</span>
+</div>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
                                 <span>20,000+ Channels</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>24,000+ VOD</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>20 000+ Chaînes</span>
+                            </li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>24,000+ Movies & Series</span>
+                            </li>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>24 000+ Films & Séries</span>
+                            </li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Full 4K Ultra HD Quality</span>
                             </li>
                             <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>24/7 Support</span>
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span class="lang-en">All Football in 4K/UHD</span>
+                                <span class="lang-fr hidden">Tout le football en 4K/UHD</span>
                             </li>
                             <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Instant Delivery</span>
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span class="lang-en">Compatible with all devices</span>
+                                <span class="lang-fr hidden">Compatible avec tous les appareils</span>
                             </li>
-                            <li class="flex items-center">
-                                <i data-feather="check" class="w-5 h-5 text-green-500 mr-2"></i>
-                                <span>Online Activation</span>
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Qualité Ultra HD 4K Complète</span>
+</li>
+                            <li class="flex items-center lang-en">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>VIP 24/7 Support</span>
                             </li>
-</ul>
-                        <a href="http://wa.me/+212774112292" class="block w-full py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 transition">
+                            <li class="flex items-center hidden lang-fr">
+                                <i data-feather="check" class="text-green-500 mr-2"></i>
+                                <span>Support VIP 24/7</span>
+                            </li>
+                        </ul>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-secondary hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 lang-en">
                             Buy Now
+                        </a>
+                        <a href="http://wa.me/+212774112292" class="block text-center bg-secondary hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden lang-fr">
+                            Acheter Maintenant
                         </a>
                     </div>
                 </div>
@@ -261,249 +392,241 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="container mx-auto px-4 py-12">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-800">Customer Reviews</h2>
-            <p class="text-gray-600 mt-2">What our subscribers say about us</p>
-        </div>
-        
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Facebook Review 1 -->
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <img src="http://static.photos/people/200x200/1" alt="User" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-semibold">Ahmed K.</h4>
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-gray-600">
-                    "Best IPTV service I've tried! Stable connection and huge selection of channels. Highly recommended!"
-                </p>
-            </div>
+    <!-- Testimonials -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 lang-en">What Our <span class="text-primary">Customers</span> Say</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 hidden lang-fr">Ce que disent nos <span class="text-primary">Clients</span></h2>
             
-            <!-- Facebook Review 2 -->
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <img src="http://static.photos/people/200x200/2" alt="User" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-semibold">Sophie M.</h4>
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="http://static.photos/people/200x200/1" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Jean Dupont</h4>
+                            <div class="flex text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
                         </div>
                     </div>
+                    <p class="text-gray-600 hidden lang-fr">
+                        Service exceptionnel ! Plus de 20 000 chaînes avec une qualité d'image impeccable. 
+                        Je recommande vivement DSTVSTORE à tous les amateurs de télévision.
+                    </p>
+                    <p class="text-gray-600 lang-en">
+                        Exceptional service! Over 20,000 channels with impeccable picture quality.
+                        I highly recommend DSTVSTORE to all TV enthusiasts.
+                    </p>
                 </div>
-                <p class="text-gray-600">
-                    "Impressive channel list and excellent customer support. The VOD library is amazing!"
-                </p>
-            </div>
-            
-            <!-- Facebook Review 3 -->
-            <div class="bg-white p-6 rounded-xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <img src="http://static.photos/people/200x200/3" alt="User" class="w-12 h-12 rounded-full mr-4">
-                    <div>
-                        <h4 class="font-semibold">David L.</h4>
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="http://static.photos/people/200x200/2" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Marie Leroy</h4>
+                            <div class="flex text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
                         </div>
                     </div>
+                    <p class="text-gray-600 hidden lang-fr">
+                        J'ai essayé plusieurs services IPTV mais DSTVSTORE est de loin le meilleur. 
+                        Aucun buffering même pendant les matchs en direct. Support client très réactif !
+                    </p>
+                    <p class="text-gray-600 lang-en">
+                        I've tried several IPTV services but DSTVSTORE is by far the best.
+                        No buffering even during live matches. Very responsive customer support!
+                    </p>
                 </div>
-                <p class="text-gray-600">
-                    "No buffering issues even during peak hours. Great value for money with all these channels!"
-                </p>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <img src="http://static.photos/people/200x200/3" alt="Customer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Thomas Martin</h4>
+                            <div class="flex text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 hidden lang-fr">
+                        Abonné depuis 2 ans et toujours aussi satisfait. La bibliothèque VOD est énorme 
+                        et mise à jour régulièrement. Excellent rapport qualité-prix.
+                    </p>
+                    <p class="text-gray-600 lang-en">
+                        Subscribed for 2 years and still as satisfied. The VOD library is huge
+                        and updated regularly. Excellent value for money.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action Section -->
-    <section class="bg-blue-600 text-white py-12">
+    <!-- CTA Section -->
+    <section class="bg-primary py-16">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Ready to Start Streaming?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-                Join thousands of satisfied customers enjoying premium IPTV service
+            <h2 class="text-3xl font-bold text-white mb-6 lang-en">Ready To Start Streaming?</h2>
+            <h2 class="text-3xl font-bold text-white mb-6 hidden lang-fr">Prêt à Commencer à Streamer ?</h2>
+            
+            <p class="text-xl text-white mb-8 max-w-2xl mx-auto lang-en">
+                Join thousands of satisfied customers enjoying premium IPTV service.
             </p>
-            <a href="http://wa.me/+212774112292" class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-gray-100 transition">
+            <p class="text-xl text-white mb-8 max-w-2xl mx-auto hidden lang-fr">
+                Rejoignez des milliers de clients satisfaits profitant d'un service IPTV premium.
+            </p>
+            
+            <a href="http://wa.me/+212774112292" class="inline-block bg-secondary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 lang-en">
                 Get Started Now
+            </a>
+            <a href="http://wa.me/+212774112292" class="inline-block bg-secondary hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 hidden lang-fr">
+                Commencer Maintenant
             </a>
         </div>
     </section>
 
-    <!-- Footer Section (Same as Header) -->
-    <footer class="bg-blue-600 text-white py-8">
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i data-feather="tv" class="w-6 h-6 mr-2"></i> DSTV STORE
-                    </h3>
-                    <p class="opacity-90">
-                        Premium IPTV service provider with the best channel selection and reliable streaming.
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <i data-feather="tv" class="text-secondary mr-2 w-8 h-8"></i>
+                        <span class="logo-text text-2xl font-bold">DSTVSTORE</span>
+                    </div>
+                    <p class="text-gray-400 max-w-xs lang-en">
+                        Premium IPTV service provider with the best quality and customer support.
+                    </p>
+                    <p class="text-gray-400 max-w-xs hidden lang-fr">
+                        Fournisseur de services IPTV premium avec la meilleure qualité et support client.
                     </p>
                 </div>
                 
-                <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:underline">Home</a></li>
-                        <li><a href="#" class="hover:underline">About Us</a></li>
-                        <li><a href="#" class="hover:underline">Pricing</a></li>
-                        <li><a href="#" class="hover:underline">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Legal</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:underline">Terms of Service</a></li>
-                        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:underline">Refund Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="font-semibold mb-4">Contact Us</h4>
-                    <ul class="space-y-2">
-                        <li class="flex items-center">
-                            <i data-feather="phone" class="w-4 h-4 mr-2"></i>
-                            <span>+212 774 112292</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="mail" class="w-4 h-4 mr-2"></i>
-                            <span>contact@dstvstore.com</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i data-feather="map-pin" class="w-4 h-4 mr-2"></i>
-                            <span>Morocco</span>
-                        </li>
-                    </ul>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 lang-en">Quick Links</h4>
+                        <h4 class="text-lg font-semibold mb-4 hidden lang-fr">Liens Rapides</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">Home</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">Contact</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">Accueil</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">À Propos</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 lang-en">Support</h4>
+                        <h4 class="text-lg font-semibold mb-4 hidden lang-fr">Support</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">Help Center</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 lang-en">Terms of Service</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">Centre d'Aide</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300 hidden lang-fr">Conditions</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 lang-en">Contact Us</h4>
+                        <h4 class="text-lg font-semibold mb-4 hidden lang-fr">Contactez-nous</h4>
+                        <div class="flex items-center mb-2">
+                            <i data-feather="mail" class="text-gray-400 mr-2 w-5 h-5"></i>
+                            <span class="text-gray-400">support@dstvstore.com</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <i data-feather="phone" class="text-gray-400 mr-2 w-5 h-5"></i>
+                            <span class="text-gray-400">+212 774-112292</span>
+                        </div>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i data-feather="facebook" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i data-feather="twitter" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i data-feather="instagram" class="w-5 h-5"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                                <i data-feather="youtube" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="border-t border-blue-500 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-sm mb-4 md:mb-0">
-                    &copy; 2023 DSTV STORE. All rights reserved.
-                </p>
-                <div class="flex space-x-4">
-                    <a href="#" class="hover:text-blue-200 transition">
-                        <i data-feather="facebook" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="hover:text-blue-200 transition">
-                        <i data-feather="twitter" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="hover:text-blue-200 transition">
-                        <i data-feather="instagram" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#" class="hover:text-blue-200 transition">
-                        <i data-feather="youtube" class="w-5 h-5"></i>
-                    </a>
-                </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p class="lang-en">&copy; 2023 DSTVSTORE. All Rights Reserved.</p>
+                <p class="hidden lang-fr">&copy; 2023 DSTVSTORE. Tous Droits Réservés.</p>
             </div>
         </div>
     </footer>
     <script>
-        // Initialize Feather Icons
-        feather.replace();
+        // Set initial language to English by default
+        let currentLang = 'en';
         
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        // Language toggle functionality
+        document.getElementById('langToggle').addEventListener('click', function() {
+            currentLang = currentLang === 'en' ? 'fr' : 'en';
+            updateLanguage();
         });
-        const translations = {
-            en: {
-                title: "DSTV STORE - Premium IPTV Service",
-                heroTitle: "Premium IPTV Service",
-                heroText: "Experience the future of television with our cutting-edge IPTV service. Enjoy seamless streaming of over 20,000 live channels, 24,000+ movies, and TV series in crystal-clear HD quality.",
-                trustedBy: "Trusted By Thousands",
-                whyChoose: "Why Choose Our IPTV?",
-                whySub: "Our powerful infrastructure delivers unmatched streaming quality and reliability",
-                features: {
-                    servers: "Powerful Servers",
-                    serversText: "Robust infrastructure with 99.9% uptime guarantee and worldwide coverage",
-                    content: "24K+ Content",
-                    contentText: "Massive library of movies, series, and live channels updated daily",
-                    multiDevice: "Multi-Device",
-                    multiDeviceText: "Watch on any device - Smart TV, Phone, Tablet, PC, or MAG Box"
-                }
-            },
-            fr: {
-                title: "DSTV STORE - Service IPTV Premium",
-                heroTitle: "Service IPTV Premium",
-                heroText: "Découvrez le futur de la télévision avec notre service IPTV de pointe. Profitez d'une diffusion fluide de plus de 20 000 chaînes en direct, 24 000+ films et séries TV en qualité HD cristalline.",
-                trustedBy: "Fait confiance par des milliers",
-                whyChoose: "Pourquoi choisir notre IPTV ?",
-                whySub: "Notre infrastructure puissante offre une qualité de streaming inégalée et une fiabilité exceptionnelle",
-                features: {
-                    servers: "Serveurs Puissants",
-                    serversText: "Infrastructure robuste avec une garantie de disponibilité de 99,9 % et une couverture mondiale",
-                    content: "24K+ Contenu",
-                    contentText: "Énorme bibliothèque de films, séries et chaînes en direct mises à jour quotidiennement",
-                    multiDevice: "Multi-Appareils",
-                    multiDeviceText: "Regardez sur n'importe quel appareil - Smart TV, téléphone, tablette, PC ou MAG Box"
-                }
-            }
-        };
 
-        function changeLanguage(lang) {
-            localStorage.setItem('preferredLanguage', lang);
+        function updateLanguage() {
+            const englishElements = document.querySelectorAll('.lang-en');
+            const frenchElements = document.querySelectorAll('.lang-fr');
             
-            const t = translations[lang];
-            
-            // Update page content
-            document.title = t.title;
-            document.querySelector('h2.text-3xl.font-bold').textContent = t.heroTitle;
-            document.querySelector('p.text-gray-600.leading-relaxed').textContent = t.heroText;
-            document.querySelector('h3.text-2xl.font-semibold').textContent = t.trustedBy;
-            document.querySelector('section.container h2').textContent = t.whyChoose;
-            document.querySelector('section.container p').textContent = t.whySub;
-            
-            // Update features
-            const featureItems = document.querySelectorAll('.bg-white.p-6.rounded-xl');
-            featureItems[0].querySelector('h3').textContent = t.features.servers;
-            featureItems[0].querySelector('p').textContent = t.features.serversText;
-            featureItems[1].querySelector('h3').textContent = t.features.content;
-            featureItems[1].querySelector('p').textContent = t.features.contentText;
-            featureItems[2].querySelector('h3').textContent = t.features.multiDevice;
-            featureItems[2].querySelector('p').textContent = t.features.multiDeviceText;
-
-            // Update button styles
-            const enBtn = document.querySelector('button[onclick="changeLanguage(\'en\')"]');
-            const frBtn = document.querySelector('button[onclick="changeLanguage(\'fr\')"]');
-            
-            enBtn.classList.remove('bg-blue-700', 'bg-blue-500');
-            frBtn.classList.remove('bg-blue-700', 'bg-blue-500');
-            
-            if (lang === 'en') {
-                enBtn.classList.add('bg-blue-700');
-                frBtn.classList.add('bg-blue-500');
+            if (currentLang === 'en') {
+                // Show English, hide French
+                englishElements.forEach(el => {
+                    el.classList.remove('hidden');
+                    el.style.display = '';
+                });
+                frenchElements.forEach(el => {
+                    el.classList.add('hidden');
+                    el.style.display = 'none';
+                });
+                document.getElementById('langToggle').textContent = 'Français';
             } else {
-                frBtn.classList.add('bg-blue-700');
-                enBtn.classList.add('bg-blue-500');
+                // Show French, hide English
+                englishElements.forEach(el => {
+                    el.classList.add('hidden');
+                    el.style.display = 'none';
+                });
+                frenchElements.forEach(el => {
+                    el.classList.remove('hidden');
+                    el.style.display = '';
+                });
+                document.getElementById('langToggle').textContent = 'English';
             }
         }
-// Set initial language on page load
-        const preferredLanguage = localStorage.getItem('preferredLanguage') || 'en';
-        changeLanguage(preferredLanguage);
-    </script>
+
+        // Initialize language
+        updateLanguage();
+        // Initialize feather icons
+        feather.replace();
+        
+        // Ensure all French elements are hidden on initial load
+        document.querySelectorAll('.lang-fr').forEach(el => {
+            el.classList.add('hidden');
+            el.style.display = 'none';
+        });
+</script>
 </body>
 </html>
